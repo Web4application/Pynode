@@ -1,12 +1,30 @@
 const my_eval_code = pyodide.runPython(`
   from pyodide.code import eval_code
   def my_eval_code(code, globals=None, locals=None):
-    extra_info = None
-    result = eval_code(code, globals, locals)
-    return globals["extra_info"], result
+    """
+    Evaluate `code` using pyodide's eval_code and return a stable tuple:
+      (extra_info, result) on success
+      ({"error": "<msg>"}, None) on failure
+
+    The function is defensive about globals not containing "extra_info".
+    """
+    try:
+      # eval_code may raise; catch and return error in a predictable shape
+      result = eval_code(code, globals, locals)
+      extra = None
+      try:
+        # globals may not be a dict-like object — use get if available
+        extra = globals.get("extra_info") if hasattr(globals, "get") else None
+      except Exception:
+        extra = None
+      return extra, result
+    except Exception as e:
+      # Return error information to the caller in a consistent format
+      return {"error": str(e)}, None
   my_eval_code
 `)
-
+ 
 function myRunPython(code){
+  // my_eval_code returns either [extra, result] or [{"error": "..."}, null]
   return my_eval_code(code, pyodide.globals);
 }
