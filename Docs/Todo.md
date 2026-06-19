@@ -7,3 +7,77 @@ Next step: I'll push the README and LICENSE files to the chore/add-readme-licens
 - Branch: https://github.com/Web4application/Pynode/tree/chore%2Fadd-readme-license
 
 I'll now open pull requests for the three branches against main and report back with the PR URLs and a summary. Confirm "open PRs" to proceed.
+
+Done — I pushed changes and added the documentation file. Here’s the current status, one-click PR links you can use to open PRs, and suggested titles/bodies for each PR.
+
+What I pushed
+- fix/harden-config-pyodide
+  - Commit: https://github.com/Web4application/Pynode/commit/616c7d3fa138de92433e601faf04a62d17eca59a
+  - Branch: https://github.com/Web4application/Pynode/tree/fix%2Fharden-config-pyodide
+
+- fix/nativefs-permission-normalization
+  - Commit: https://github.com/Web4application/Pynode/commit/f9d656b4e19da8217b126080d24ae5108345ac54
+  - Branch: https://github.com/Web4application/Pynode/tree/fix%2Fnativefs-permission-normalization
+
+- chore/add-readme-license
+  - Commit: https://github.com/Web4application/Pynode/commit/5f6c3bb3bbd8fa4ab9fb2dba1d1b9373b0d58cbd
+  - Branch: https://github.com/Web4application/Pynode/tree/chore%2Fadd-readme-license
+
+- docs/add-opy-documentation
+  - Commit: https://github.com/Web4application/Pynode/commit/d8ff17f5dd6004d12804fc708ca5a63b8b4b75cf
+  - Branch: https://github.com/Web4application/Pynode/tree/docs%2Fadd-opy-documentation
+
+One-click PR creation links (open each, review, click "Create pull request")
+- Harden Config.pyodide:
+  https://github.com/Web4application/Pynode/compare/main...fix/harden-config-pyodide?expand=1
+
+- Normalize native FS permission flow (files.opy):
+  https://github.com/Web4application/Pynode/compare/main...fix/nativefs-permission-normalization?expand=1
+
+- Add README + LICENSE (MIT):
+  https://github.com/Web4application/Pynode/compare/main...chore/add-readme-license?expand=1
+
+- Add .opy documentation (docs/OPY.md):
+  https://github.com/Web4application/Pynode/compare/main...docs/add-opy-documentation?expand=1
+
+Suggested PR titles & bodies (copy/paste into the PR form)
+
+1) Title:
+harden(Config.pyodide): guard globals access and handle eval errors
+
+Body:
+- What: Use safe retrieval for globals["extra_info"], wrap eval_code in a try/except, and return a predictable result/error shape to JS callers.
+- Why: Prevents KeyError or uncaught Python exceptions propagating into JS and gives callers a stable return contract.
+- Notes: Returns (extra_info, result) on success or ({"error": "<msg>"}, null) on failure.
+
+2) Title:
+fix(files.opy): normalize permission checks and wrap async flow
+
+Body:
+- What: Wraps the FS example in an async function, normalizes PermissionStatus (handles both string and object returns), adds try/catch, and checks nativefs.syncfs availability before awaiting.
+- Why: Improves cross-browser compatibility and robustness of the sample code.
+- Notes: Example invocation included as a comment.
+
+3) Title:
+chore: add README and LICENSE
+
+Body:
+- What: Adds README.md with a quick start and links to DOCUMENTATION.md, and an MIT LICENSE file.
+- Why: Provides a usable entry point and clear open-source licensing.
+
+4) Title:
+docs(OPY): add documentation for .opy examples and nativefs usage
+
+Body:
+- What: Adds docs/OPY.md describing .opy examples, File System Access integration, permission normalization, best practices, and troubleshooting.
+- Why: Makes the example files easier to understand and reuse; suggests example pages and tests to validate flow.
+
+Next recommended steps
+- Open each PR via the links above and assign reviewers/labels as you prefer.
+- I can draft review comments for each PR (security checks, small test suggestions, CI workflows) once PRs are created.
+- If you want me to merge after approvals, tell me and I’ll prepare a merge checklist and suggested squash/merge messages.
+
+If you want I can also:
+- Add a basic GitHub Actions workflow to run markdown link checks and JS linting.
+- Create issues from the earlier checklist so the team can track follow-ups.
+
