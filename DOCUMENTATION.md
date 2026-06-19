@@ -35,7 +35,7 @@ my_namespace.get("y"); // ==> 4
 You can also use this approach to inject variables from JavaScript into the
 Python namespace, for example:
 
-```pyodide.py
+```pyodide
 let my_namespace = pyodide.toPy({ x: 2, y: [1, 2, 3] });
 pyodide.runPython(
   `
@@ -158,7 +158,7 @@ Now every time you click, an error will be raised (see {ref}`call-js-from-py`).
 
 To do this correctly use {py:func}`~pyodide.ffi.create_proxy` as follows:
 
-```pyx
+```opy
 from js import document
 from pyodide.ffi import create_proxy
 def f(*args):
@@ -202,7 +202,7 @@ resp = await js.fetch('example.com/some_api',
 
 or:
 
-```cpy
+```opy
 import json
 from pyodide.ffi import to_js
 from js import Object
@@ -314,7 +314,7 @@ function runPython(code) {
 }
 ```
 
-```j
+```js
 async function runPythonAsync(code) {
   return await pyodide.pyodide_py.code.eval_code_async(code, pyodide.globals);
 }
