@@ -1,0 +1,15 @@
+const my_eval_code = pyodide.runPython(`
+  from pyodide.code import eval_code
+  def my_eval_code(code, globals=None, locals=None):
+    try:
+      result = eval_code(code, globals, locals)
+      extra = globals.get("extra_info") if isinstance(globals, dict) else None
+    except Exception as e:
+      # return error info to JS in a predictable way
+      return {"error": str(e)}, None
+    return extra, result
+  my_eval_code
+`)
+function myRunPython(code){
+  return my_eval_code(code, pyodide.globals);
+}
